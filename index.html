@@ -26,11 +26,6 @@
 </head>
 <body>
 
-    <div id="pwa-install-banner" class="install-banner" style="display:none;">
-        <span>🚀 Instala Anupro360 en tu móvil</span>
-        <button id="btn-install" class="btn-sm">INSTALAR</button>
-    </div>
-
     <nav class="navbar">
         <div class="logo-container">
             <img src="imagotipoblanco.webp" alt="Anupro360 Logo" class="nav-logo">
@@ -132,6 +127,18 @@
             </div>
         </div>
     </section>
+
+    <div id="pwa-install-banner" class="pwa-card" style="display:none;">
+        <button id="btn-close-pwa" class="pwa-close">&times;</button>
+        <div class="pwa-body">
+            <img src="favicon.png" alt="Anupro360 App" class="pwa-icon">
+            <div class="pwa-text">
+                <strong>Anupro360 App</strong>
+                <span>Instala para acceso rápido</span>
+            </div>
+        </div>
+        <button id="btn-install" class="btn-pwa-install">INSTALAR</button>
+    </div>
 
     <footer>
         <p>© <span id="year"></span> Anupro360. Todos los derechos reservados.</p>
