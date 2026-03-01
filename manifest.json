@@ -1,12 +1,13 @@
 {
   "name": "Anupro360 Consultoría y Capacitación",
   "short_name": "Anupro360",
-  "description": "Estrategia empresarial y formación industrial de alto impacto en Iquique.",
-  "start_url": "/index.html",
+  "description": "Estrategia empresarial y formación industrial profesional en Iquique, Chile.",
+  "start_url": "https://anupro360.cl/",
   "display": "standalone",
   "background_color": "#003B5C",
   "theme_color": "#003B5C",
   "orientation": "portrait",
+  "scope": "/",
   "icons": [
     {
       "src": "icon-192.png",
@@ -17,7 +18,8 @@
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

@@ -3,6 +3,7 @@
     --amarillo-minero: #FFB81C;
     --naranja-accion: #FF5C00;
     --blanco: #FFFFFF;
+    --fondo-gris: #f4f7f9;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
@@ -18,7 +19,7 @@ body { background-color: var(--blanco); overflow-x: hidden; line-height: 1.6; }
 .nav-aula { color: var(--amarillo-minero) !important; font-weight: 800 !important; }
 .nav-btn { background: var(--naranja-accion); padding: 0.5rem 1.2rem; border-radius: 50px; }
 
-/* Hero y Botones con Movimiento */
+/* Hero y Botones Dinámicos */
 .hero { height: 80vh; background: linear-gradient(rgba(0,59,92,0.8), rgba(0,59,92,0.8)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 5%; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); }
 .hero h1 { font-size: clamp(1.8rem, 5vw, 3.5rem); text-transform: uppercase; margin-bottom: 1.5rem; }
 .cta-container { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
@@ -27,22 +28,27 @@ body { background-color: var(--blanco); overflow-x: hidden; line-height: 1.6; }
 .btn-empresa { background: white; color: var(--azul-oscuro); }
 .btn-capacitarme { background: var(--amarillo-minero); color: var(--azul-oscuro); }
 
-/* Grid Servicios con Movimiento */
+/* Diferenciadores Grid */
+.diferenciadores { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; padding: 5rem 10%; text-align: center; background: #fafafa; }
+.diferenciador-item .icon { font-size: 3rem; margin-bottom: 1rem; }
+
+/* Servicios Grid con Efecto Elevación */
 .servicios-section { padding: 5rem 10%; text-align: center; }
 .titulo-seccion { color: var(--azul-oscuro); font-size: 2.2rem; margin-bottom: 3rem; text-transform: uppercase; }
 .grid-servicios { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-.card { padding: 3rem; border-radius: 12px; color: white; text-align: left; transition: 0.4s ease; cursor: pointer; }
+.card { padding: 3rem; border-radius: 12px; color: white; text-align: left; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
 .card:hover { transform: translateY(-15px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
 .card-consultoria { background: var(--azul-oscuro); }
 .card-capacitacion { background: #5C6B6B; border-bottom: 6px solid var(--amarillo-minero); }
 
-/* Grid Blog */
-.blog-section { padding: 5rem 10%; background: #f4f7f9; text-align: center; }
+/* Blog Grid con Hover */
+.blog-section { padding: 5rem 10%; background: var(--fondo-gris); text-align: center; }
 .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
 .blog-card { background: white; border-radius: 15px; overflow: hidden; text-align: left; transition: 0.4s; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 .blog-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
 .blog-img { height: 180px; background: var(--azul-oscuro); display: flex; justify-content: center; align-items: center; font-size: 3.5rem; }
 .blog-content { padding: 1.5rem; }
+.blog-tag { background: var(--amarillo-minero); font-size: 0.7rem; font-weight: 800; padding: 0.3rem 0.6rem; border-radius: 5px; }
 
 /* Contacto */
 .contacto-section { background: var(--azul-oscuro); color: white; padding: 5rem 10%; }
@@ -51,20 +57,24 @@ body { background-color: var(--blanco); overflow-x: hidden; line-height: 1.6; }
 .contacto-form input, .contacto-form textarea { width: 100%; margin-bottom: 1rem; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; }
 .btn-send { width: 100%; background: var(--naranja-accion); color: white; border: none; padding: 1rem; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; }
 
-/* DISEÑO DE LA TARJETA PWA FLOTANTE */
-.pwa-card { position: fixed; bottom: 20px; right: 20px; width: 300px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 3000; padding: 15px; display: flex; flex-direction: column; gap: 10px; animation: slideIn 0.5s ease-out; border-left: 5px solid var(--naranja-accion); }
-@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-.pwa-close { position: absolute; top: 5px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; color: #999; }
-.pwa-body { display: flex; align-items: center; gap: 12px; }
-.pwa-icon { width: 45px; height: 45px; border-radius: 10px; }
-.pwa-text { display: flex; flex-direction: column; }
-.pwa-text strong { font-size: 0.9rem; color: var(--azul-oscuro); }
-.pwa-text span { font-size: 0.75rem; color: #666; }
-.btn-pwa-install { background: var(--naranja-accion); color: white; border: none; padding: 8px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
+/* ESTILO TARJETA PWA MODERNA */
+.pwa-card {
+    position: fixed; bottom: 20px; right: 20px; width: 320px; background: white;
+    border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); z-index: 9999;
+    padding: 15px; display: flex; flex-direction: column; gap: 12px;
+    border-left: 6px solid var(--naranja-accion); animation: slideIn 0.5s ease-out;
+}
+@keyframes slideIn { from { transform: translateX(110%); } to { transform: translateX(0); } }
+.pwa-close-btn { position: absolute; top: 5px; right: 10px; background: none; border: none; font-size: 22px; color: #999; cursor: pointer; }
+.pwa-content { display: flex; align-items: center; gap: 15px; }
+.pwa-app-icon { width: 50px; height: 50px; border-radius: 12px; }
+.pwa-info strong { display: block; color: var(--azul-oscuro); font-size: 1rem; }
+.pwa-info span { font-size: 0.8rem; color: #666; }
+.btn-pwa-action { background: var(--naranja-accion); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
 footer { background: #002b44; color: white; padding: 2rem; text-align: center; }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .nav-links { display: none; }
     .pwa-card { width: calc(100% - 40px); left: 20px; }
 }

@@ -1,16 +1,17 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// PWA: Lógica de Instalación Dinámica
+// --- LÓGICA DE INSTALACIÓN PWA MEJORADA ---
 let deferredPrompt;
-const pwaCard = document.getElementById('pwa-install-banner');
+const pwaCard = document.getElementById('pwa-install-card');
 const btnInstall = document.getElementById('btn-install');
 const btnClose = document.getElementById('btn-close-pwa');
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    // Solo mostramos el banner si no ha sido cerrado manualmente
-    if (!localStorage.getItem('pwa_banner_closed')) {
+    
+    // Solo mostrar si no se cerró en esta sesión
+    if (!localStorage.getItem('pwa_dismissed')) {
         pwaCard.style.display = 'flex';
     }
 });
@@ -20,9 +21,8 @@ btnInstall?.addEventListener('click', () => {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
-                if (typeof gtag === 'function') gtag('event', 'pwa_instalada_exito');
+                pwaCard.style.display = 'none';
             }
-            pwaCard.style.display = 'none';
             deferredPrompt = null;
         });
     }
@@ -30,18 +30,14 @@ btnInstall?.addEventListener('click', () => {
 
 btnClose?.addEventListener('click', () => {
     pwaCard.style.display = 'none';
-    // Guardamos en el navegador que el usuario cerró el banner
-    localStorage.setItem('pwa_banner_closed', 'true');
+    localStorage.setItem('pwa_dismissed', 'true');
 });
 
-// Formulario de Contacto
+// Formulario de Contacto + Rastreo Simple
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (typeof gtag === 'function') {
-            gtag('event', 'lead_generado', { 'tipo': 'form_contacto' });
-        }
         alert('¡Mensaje enviado con éxito! Nos contactaremos pronto.');
         contactForm.reset();
     });
@@ -50,6 +46,6 @@ if (contactForm) {
 // Registro del Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW error', err));
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log('Error SW', err));
     });
 }
