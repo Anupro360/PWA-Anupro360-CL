@@ -1,6 +1,6 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// --- LÓGICA DE INSTALACIÓN PWA MEJORADA ---
+// --- LÓGICA DE LA TARJETA PWA ---
 let deferredPrompt;
 const pwaCard = document.getElementById('pwa-install-card');
 const btnInstall = document.getElementById('btn-install');
@@ -10,42 +10,32 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
-    // Solo mostrar si no se cerró en esta sesión
-    if (!localStorage.getItem('pwa_dismissed')) {
+    // Solo mostramos la tarjeta si NO se cerró manualmente en esta sesión
+    if (!localStorage.getItem('pwa_hidden')) {
         pwaCard.style.display = 'flex';
     }
 });
 
-btnInstall?.addEventListener('click', () => {
+btnInstall?.addEventListener('click', async () => {
     if (deferredPrompt) {
         deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                pwaCard.style.display = 'none';
-            }
-            deferredPrompt = null;
-        });
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            pwaCard.style.display = 'none';
+        }
+        deferredPrompt = null;
     }
 });
 
 btnClose?.addEventListener('click', () => {
     pwaCard.style.display = 'none';
-    localStorage.setItem('pwa_dismissed', 'true');
+    // Guardamos en el navegador que el usuario no quiere ver el banner ahora
+    localStorage.setItem('pwa_hidden', 'true');
 });
 
-// Formulario de Contacto + Rastreo Simple
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('¡Mensaje enviado con éxito! Nos contactaremos pronto.');
-        contactForm.reset();
-    });
-}
-
-// Registro del Service Worker
+// Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.log('Error SW', err));
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW error', err));
     });
 }
