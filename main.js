@@ -1,6 +1,6 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// --- LÓGICA DE LA TARJETA PWA ---
+// --- LÓGICA DE INSTALACIÓN PWA ---
 let deferredPrompt;
 const pwaCard = document.getElementById('pwa-install-card');
 const btnInstall = document.getElementById('btn-install');
@@ -10,7 +10,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
-    // Solo mostramos la tarjeta si NO se cerró manualmente en esta sesión
+    // Solo mostramos si NO se cerró en esta sesión
     if (!localStorage.getItem('pwa_hidden')) {
         pwaCard.style.display = 'flex';
     }
@@ -29,13 +29,19 @@ btnInstall?.addEventListener('click', async () => {
 
 btnClose?.addEventListener('click', () => {
     pwaCard.style.display = 'none';
-    // Guardamos en el navegador que el usuario no quiere ver el banner ahora
     localStorage.setItem('pwa_hidden', 'true');
+});
+
+// Formulario de Contacto
+document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('¡Mensaje enviado con éxito! Nos contactaremos pronto.');
+    e.target.reset();
 });
 
 // Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW error', err));
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log('Error SW', err));
     });
 }
